@@ -6,6 +6,14 @@ import { routing } from "./i18n/routing";
 const intlMiddleware = createMiddleware(routing);
 
 export async function middleware(request: NextRequest) {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  // If Supabase is not configured, just run intl middleware
+  if (!supabaseUrl || !supabaseKey) {
+    return intlMiddleware(request);
+  }
+
   // Step 1: Refresh Supabase session and collect auth cookies
   const supabaseCookies: Array<{
     name: string;
@@ -13,10 +21,8 @@ export async function middleware(request: NextRequest) {
     options: Record<string, unknown>;
   }> = [];
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
+  try {
+    const supabase = createServerClient(supabaseUrl, supabaseKey, {
       cookies: {
         getAll() {
           return request.cookies.getAll();
@@ -34,11 +40,13 @@ export async function middleware(request: NextRequest) {
           );
         },
       },
-    }
-  );
+    });
 
-  // Refresh the session token
-  await supabase.auth.getUser();
+    // Refresh the session token
+    await supabase.auth.getUser();
+  } catch {
+    // If Supabase fails, continue without auth — don't break the site
+  }
 
   // Step 2: Run next-intl middleware (locale detection, routing)
   const intlResponse = intlMiddleware(request);
