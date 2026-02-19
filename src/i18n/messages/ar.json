@@ -1,6 +1,6 @@
 {
   "common": {
-    "siteName": "ZZStay",
+    "siteName": "BookYourHotel",
     "tagline": "نفس الإقامة. أسعار أفضل.",
     "subtitle": "2 مليون فندق حول العالم",
     "search": "بحث",
@@ -185,11 +185,48 @@
     "bookingRef": "مرجع الحجز",
     "hotelConfirmation": "تأكيد الفندق",
     "printBooking": "طباعة الحجز",
-    "backToHome": "العودة للرئيسية"
+    "backToHome": "العودة للرئيسية",
+    "createAccountTitle": "احفظ تفاصيل حجزك",
+    "createAccountSubtitle": "أنشئ حساباً مجانياً للوصول إلى حجوزاتك في أي وقت وحفظ فنادقك المفضلة.",
+    "createAccountCta": "إنشاء حساب"
+  },
+  "auth": {
+    "signIn": "تسجيل الدخول",
+    "signUp": "إنشاء حساب",
+    "signOut": "تسجيل الخروج",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "fullName": "الاسم الكامل",
+    "signInWithGoogle": "المتابعة مع Google",
+    "orContinueWith": "أو المتابعة بالبريد الإلكتروني",
+    "noAccount": "ليس لديك حساب؟",
+    "alreadyHaveAccount": "لديك حساب بالفعل؟",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "checkEmailTitle": "تحقق من بريدك الإلكتروني",
+    "checkEmailText": "لقد أرسلنا لك رابط تأكيد إلى بريدك الإلكتروني. يرجى النقر على الرابط لتأكيد حسابك.",
+    "signInError": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+    "signUpError": "تعذر إنشاء الحساب. يرجى المحاولة مرة أخرى."
+  },
+  "account": {
+    "myAccount": "حسابي",
+    "profile": "الملف الشخصي",
+    "bookings": "الحجوزات",
+    "favorites": "المفضلة",
+    "fullName": "الاسم الكامل",
+    "email": "البريد الإلكتروني",
+    "saveChanges": "حفظ التغييرات",
+    "changesSaved": "تم حفظ التغييرات!",
+    "memberSince": "عضو منذ {date}",
+    "noBookings": "ليس لديك أي حجوزات بعد.",
+    "noFavorites": "لم تحفظ أي فنادق بعد.",
+    "startSearching": "ابدأ البحث عن فنادق",
+    "viewHotel": "عرض الفندق",
+    "viewBooking": "عرض الحجز",
+    "removeFromFavorites": "إزالة من المفضلة"
   },
   "footer": {
-    "about": "عن ZZStay",
-    "aboutText": "يساعد ZZStay المسافرين في العثور على أفضل عروض الفنادق في جميع أنحاء العالم.",
+    "about": "عن BookYourHotel",
+    "aboutText": "يساعد BookYourHotel المسافرين في العثور على أفضل عروض الفنادق في جميع أنحاء العالم.",
     "quickLinks": "روابط سريعة",
     "support": "الدعم",
     "legal": "قانوني",
@@ -197,6 +234,6 @@
     "termsOfService": "شروط الخدمة",
     "helpCenter": "مركز المساعدة",
     "faq": "الأسئلة الشائعة",
-    "copyright": "© {year} ZZStay. جميع الحقوق محفوظة."
+    "copyright": "© {year} BookYourHotel. جميع الحقوق محفوظة."
   }
 }

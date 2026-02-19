@@ -74,6 +74,6 @@ export const useSearchStore = create<SearchState>()(
           budget: "",
         }),
     }),
-    { name: "zzstay-search" }
+    { name: "bookyourhotel-search" }
   )
 );

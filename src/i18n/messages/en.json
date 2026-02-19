@@ -1,7 +1,7 @@
 {
   "common": {
-    "siteName": "ZZStay",
-    "tagline": "Same Stays. Better Prices.",
+    "siteName": "BookYourHotel",
+    "tagline": "Simple Booking, Perfect Stays.",
     "subtitle": "2 Million Hotels Worldwide",
     "search": "Search",
     "book": "Book Now",
@@ -185,11 +185,48 @@
     "bookingRef": "Booking Reference",
     "hotelConfirmation": "Hotel Confirmation",
     "printBooking": "Print Booking",
-    "backToHome": "Back to Home"
+    "backToHome": "Back to Home",
+    "createAccountTitle": "Save your booking details",
+    "createAccountSubtitle": "Create a free account to access your bookings anytime and save your favorite hotels.",
+    "createAccountCta": "Create an account"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out",
+    "email": "Email",
+    "password": "Password",
+    "fullName": "Full Name",
+    "signInWithGoogle": "Continue with Google",
+    "orContinueWith": "or continue with email",
+    "noAccount": "Don't have an account?",
+    "alreadyHaveAccount": "Already have an account?",
+    "forgotPassword": "Forgot password?",
+    "checkEmailTitle": "Check your email",
+    "checkEmailText": "We've sent a confirmation link to your email address. Please click the link to verify your account.",
+    "signInError": "Invalid email or password",
+    "signUpError": "Could not create account. Please try again."
+  },
+  "account": {
+    "myAccount": "My Account",
+    "profile": "Profile",
+    "bookings": "Bookings",
+    "favorites": "Favorites",
+    "fullName": "Full Name",
+    "email": "Email",
+    "saveChanges": "Save Changes",
+    "changesSaved": "Changes saved!",
+    "memberSince": "Member since {date}",
+    "noBookings": "You don't have any bookings yet.",
+    "noFavorites": "You haven't saved any hotels yet.",
+    "startSearching": "Start searching hotels",
+    "viewHotel": "View hotel",
+    "viewBooking": "View booking",
+    "removeFromFavorites": "Remove from favorites"
   },
   "footer": {
-    "about": "About ZZStay",
-    "aboutText": "ZZStay helps travelers find the best hotel deals worldwide. We compare prices across multiple providers to ensure you always get the best rate.",
+    "about": "About BookYourHotel",
+    "aboutText": "BookYourHotel helps travelers find the best hotel deals worldwide. We compare prices across multiple providers to ensure you always get the best rate.",
     "quickLinks": "Quick Links",
     "support": "Support",
     "legal": "Legal",
@@ -197,6 +234,6 @@
     "termsOfService": "Terms of Service",
     "helpCenter": "Help Center",
     "faq": "FAQ",
-    "copyright": "© {year} ZZStay. All rights reserved."
+    "copyright": "© {year} BookYourHotel. All rights reserved."
   }
 }

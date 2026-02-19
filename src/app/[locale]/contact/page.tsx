@@ -56,7 +56,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <p className="text-sm text-text-muted">Email</p>
-                  <p className="font-medium text-text-primary">support@zzstay.com</p>
+                  <p className="font-medium text-text-primary">support@bookyourhotel.online</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">

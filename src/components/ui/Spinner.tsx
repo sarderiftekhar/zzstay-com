@@ -8,7 +8,7 @@ interface SpinnerProps {
 }
 
 /**
- * Branded ZZStay loading spinner.
+ * Branded BookYourHotel loading spinner.
  * Shows the "ZZ" logo with orbiting dots and a breathing pulse.
  */
 export default function Spinner({ size = 48, className }: SpinnerProps) {

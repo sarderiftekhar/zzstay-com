@@ -43,6 +43,7 @@ import SmartHighlights from "@/components/hotels/SmartHighlights";
 import ReviewHighlights from "@/components/hotels/ReviewHighlights";
 import ReviewFilters from "@/components/hotels/ReviewFilters";
 import RoomSection from "@/components/hotels/RoomSection";
+import FavoriteButton from "@/components/hotels/FavoriteButton";
 
 interface HotelData {
   id: string;
@@ -458,12 +459,24 @@ function HotelDetailPageInner() {
                   ))}
                 </div>
               )}
-              <h1
-                className="text-3xl sm:text-4xl font-bold text-text-primary leading-tight"
-                style={{ fontFamily: "var(--font-playfair)" }}
-              >
-                {hotel.name}
-              </h1>
+              <div className="flex items-center gap-3">
+                <h1
+                  className="text-3xl sm:text-4xl font-bold text-text-primary leading-tight"
+                  style={{ fontFamily: "var(--font-playfair)" }}
+                >
+                  {hotel.name}
+                </h1>
+                <FavoriteButton
+                  hotelId={hotel.id}
+                  hotelName={hotel.name}
+                  hotelImage={hotel.images?.[0]}
+                  hotelAddress={hotel.address}
+                  hotelStarRating={hotel.starRating}
+                  hotelCity={hotel.city}
+                  hotelCountry={hotel.country}
+                  className="w-10 h-10 rounded-full border border-border hover:border-red-200 hover:bg-red-50 transition-all duration-200 shrink-0"
+                />
+              </div>
               <div className="flex items-center flex-wrap gap-x-4 gap-y-1 text-sm text-text-muted">
                 <span className="flex items-center gap-1.5">
                   <MapPin size={14} className="shrink-0" />

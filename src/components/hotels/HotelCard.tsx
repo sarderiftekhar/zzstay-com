@@ -4,10 +4,11 @@ import { useState, useCallback } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
-import { MapPin, Star, Wifi, Heart, ChevronLeft, ChevronRight } from "lucide-react";
+import { MapPin, Star, Wifi, ChevronLeft, ChevronRight } from "lucide-react";
 import { formatCurrency, getStarRatingText } from "@/lib/utils";
 import { usePreferencesStore } from "@/store/preferencesStore";
 import { useSearchStore } from "@/store/searchStore";
+import FavoriteButton from "@/components/hotels/FavoriteButton";
 
 interface HotelCardProps {
   hotel: {
@@ -147,12 +148,16 @@ export default function HotelCard({ hotel }: HotelCardProps) {
             )}
 
             {/* Wishlist button */}
-            <button
-              onClick={(e) => e.preventDefault()}
-              className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 hover:bg-white hover:scale-110 flex items-center justify-center transition-all duration-200 cursor-pointer active:scale-95 z-10"
-            >
-              <Heart size={16} className="text-text-muted hover:text-red-400 transition-colors" />
-            </button>
+            <FavoriteButton
+              hotelId={hotel.hotelId}
+              hotelName={hotel.name}
+              hotelImage={hotel.main_photo || hotel.hotelImages?.[0]}
+              hotelAddress={hotel.address}
+              hotelStarRating={hotel.starRating}
+              hotelCity={hotel.city}
+              hotelCountry={hotel.country}
+              className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 hover:bg-white hover:scale-110 transition-all duration-200 z-10"
+            />
 
             {/* Free cancellation badge on image */}
             {isFreeCancellation && (

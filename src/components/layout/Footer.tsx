@@ -19,8 +19,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8">
           {/* About — wider */}
           <div className="lg:col-span-4">
-            <div className="text-3xl font-bold mb-5" style={{ fontFamily: "var(--font-playfair)" }}>
-              <span className="text-accent-bright">ZZ</span>Stay
+            <div className="text-3xl mb-5" style={{ fontFamily: "var(--font-ephesis)", WebkitTextStroke: "0.6px" }}>
+              <span className="text-accent-bright">Book</span>YourHotel
             </div>
             <p className="text-sm text-gray-400 leading-relaxed mb-6 max-w-xs">
               {t("aboutText")}
@@ -87,11 +87,11 @@ export default function Footer() {
             </h4>
             <ul className="space-y-4">
               <li>
-                <a href="mailto:support@zzstay.com" className="flex items-center gap-3 text-sm text-gray-400 hover:text-accent-bright transition-colors group">
+                <a href="mailto:support@bookyourhotel.online" className="flex items-center gap-3 text-sm text-gray-400 hover:text-accent-bright transition-colors group">
                   <div className="w-9 h-9 rounded-lg bg-white/5 group-hover:bg-accent-bright/10 flex items-center justify-center transition-colors">
                     <Mail size={15} className="text-accent-bright" />
                   </div>
-                  support@zzstay.com
+                  support@bookyourhotel.online
                 </a>
               </li>
               <li>

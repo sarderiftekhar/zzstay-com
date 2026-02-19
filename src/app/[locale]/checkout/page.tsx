@@ -12,11 +12,14 @@ import PriceBreakdown from "@/components/booking/PriceBreakdown";
 import Button from "@/components/ui/Button";
 import { ArrowLeft } from "lucide-react";
 import { GuestInfo } from "@/types/booking";
+import { createClient } from "@/lib/supabase/client";
+import { useAuthStore } from "@/store/authStore";
 
 export default function CheckoutPage() {
   const t = useTranslations("booking");
   const router = useRouter();
   const booking = useBookingStore();
+  const { user } = useAuthStore();
 
   const [guestInfo, setGuestInfo] = useState<GuestInfo>({
     firstName: "",
@@ -93,6 +96,26 @@ export default function CheckoutPage() {
       }
 
       const bookingId = bookData.data.bookingId || bookData.data.id;
+
+      // Save to booking history if logged in
+      if (user) {
+        const supabase = createClient();
+        await supabase.from("booking_history").insert({
+          user_id: user.id,
+          liteapi_booking_id: bookingId,
+          hotel_id: booking.hotelId,
+          hotel_name: booking.hotelName,
+          hotel_image: booking.roomImage,
+          room_name: booking.roomName,
+          check_in: booking.checkIn,
+          check_out: booking.checkOut,
+          currency: booking.currency,
+          total_rate: booking.totalRate,
+          status: "confirmed",
+          guest_name: `${guestInfo.firstName} ${guestInfo.lastName}`,
+          guest_email: guestInfo.email,
+        });
+      }
 
       // Navigate to confirmation
       router.push(`/booking/${bookingId}`);

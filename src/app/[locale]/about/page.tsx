@@ -13,7 +13,7 @@ export default function AboutPage() {
             className="text-4xl sm:text-5xl font-bold mb-4"
             style={{ fontFamily: "var(--font-playfair)" }}
           >
-            About <span className="text-accent-bright">ZZ</span>Stay
+            About <span className="text-accent-bright" style={{ fontFamily: "var(--font-ephesis)" }}>BookYourHotel</span>
           </h1>
           <p className="text-lg text-gray-400 max-w-2xl mx-auto">
             We help travelers find the best hotel deals worldwide. Same stays, better prices.
@@ -31,7 +31,7 @@ export default function AboutPage() {
             Our Mission
           </h2>
           <p className="text-text-secondary leading-relaxed">
-            ZZStay was founded with a simple belief: you should never overpay for a hotel room.
+            BookYourHotel was founded with a simple belief: you should never overpay for a hotel room.
             We compare prices across multiple providers to ensure you always get the best rate
             for the exact same hotel, same room, same dates. Our technology scans over 2 million
             hotels worldwide to find you the perfect stay at the best price.

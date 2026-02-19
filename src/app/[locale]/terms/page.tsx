@@ -15,20 +15,20 @@ export default function TermsPage() {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 prose prose-sm text-text-secondary">
         <h2>1. Acceptance of Terms</h2>
         <p>
-          By accessing and using ZZStay, you agree to be bound by these Terms of Service.
+          By accessing and using BookYourHotel, you agree to be bound by these Terms of Service.
           If you do not agree with any part of these terms, please do not use our services.
         </p>
 
         <h2>2. Service Description</h2>
         <p>
-          ZZStay provides a hotel search and booking platform. We act as an intermediary
+          BookYourHotel provides a hotel search and booking platform. We act as an intermediary
           between you and hotel providers. We compare rates from multiple sources to help
           you find the best prices.
         </p>
 
         <h2>3. Booking Terms</h2>
         <p>
-          When you make a booking through ZZStay, you enter into a contract with the hotel
+          When you make a booking through BookYourHotel, you enter into a contract with the hotel
           provider. Cancellation policies, check-in/check-out times, and other hotel-specific
           terms are set by each hotel and displayed during the booking process.
         </p>
@@ -56,14 +56,14 @@ export default function TermsPage() {
 
         <h2>7. Liability</h2>
         <p>
-          ZZStay is not liable for any issues arising from your stay at a hotel, including
+          BookYourHotel is not liable for any issues arising from your stay at a hotel, including
           but not limited to service quality, facility conditions, or disputes with hotel
           staff. We facilitate bookings but do not control hotel operations.
         </p>
 
         <h2>8. Contact</h2>
         <p>
-          For questions about these terms, contact us at legal@zzstay.com.
+          For questions about these terms, contact us at legal@bookyourhotel.online.
         </p>
 
         <p className="text-text-muted text-xs mt-8">

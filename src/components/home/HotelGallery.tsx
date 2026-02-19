@@ -46,7 +46,7 @@ export default function HotelGallery() {
               href="/contact"
               className="inline-flex items-center gap-2 bg-white text-accent font-semibold px-6 py-3 rounded-full text-sm hover:bg-white/90 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
             >
-              support@zzstay.com
+              support@bookyourhotel.online
               <ArrowRight size={16} />
             </Link>
           </div>

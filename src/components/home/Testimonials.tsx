@@ -9,7 +9,7 @@ const TESTIMONIALS = [
     name: "Sarah M.",
     location: "London, UK",
     rating: 5,
-    text: "Found the exact same hotel room for 30% less than what I was about to book on another site. ZZStay is my go-to now!",
+    text: "Found the exact same hotel room for 30% less than what I was about to book on another site. BookYourHotel is my go-to now!",
     avatar: "SM",
   },
   {

@@ -8,6 +8,7 @@ import { usePreferencesStore } from "@/store/preferencesStore";
 import LanguageSelector from "./LanguageSelector";
 import CurrencySelector from "./CurrencySelector";
 import MobileMenu from "./MobileMenu";
+import UserMenu from "@/components/auth/UserMenu";
 
 export default function Header() {
   const t = useTranslations("nav");
@@ -37,11 +38,11 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
             <span
-              className="text-2xl sm:text-[28px] font-bold tracking-tight transition-transform duration-200 group-hover:scale-105"
-              style={{ fontFamily: "var(--font-playfair)" }}
+              className="text-3xl sm:text-[36px] tracking-tight transition-transform duration-200 group-hover:scale-105"
+              style={{ fontFamily: "var(--font-ephesis)", WebkitTextStroke: "0.6px" }}
             >
-              <span className="text-accent-bright">ZZ</span>
-              <span className="text-white">Stay</span>
+              <span className="text-accent-bright">Book</span>
+              <span className="text-white">YourHotel</span>
             </span>
           </Link>
 
@@ -99,6 +100,9 @@ export default function Header() {
                 <CurrencySelector onClose={() => setShowCurrencySelector(false)} />
               )}
             </div>
+
+            {/* User Menu */}
+            <UserMenu />
 
             {/* Mobile menu button */}
             <button

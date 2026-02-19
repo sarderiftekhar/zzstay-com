@@ -15,6 +15,6 @@ export const usePreferencesStore = create<PreferencesState>()(
       currency: DEFAULT_CURRENCY,
       setCurrency: (currency) => set({ currency }),
     }),
-    { name: "zzstay-preferences" }
+    { name: "bookyourhotel-preferences" }
   )
 );

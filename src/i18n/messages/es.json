@@ -1,6 +1,6 @@
 {
   "common": {
-    "siteName": "ZZStay",
+    "siteName": "BookYourHotel",
     "tagline": "Mismas Estancias. Mejores Precios.",
     "subtitle": "2 Millones de Hoteles en Todo el Mundo",
     "search": "Buscar",
@@ -185,11 +185,48 @@
     "bookingRef": "Referencia de Reserva",
     "hotelConfirmation": "Confirmación del Hotel",
     "printBooking": "Imprimir Reserva",
-    "backToHome": "Volver al Inicio"
+    "backToHome": "Volver al Inicio",
+    "createAccountTitle": "Guarda los detalles de tu reserva",
+    "createAccountSubtitle": "Crea una cuenta gratuita para acceder a tus reservas en cualquier momento y guardar tus hoteles favoritos.",
+    "createAccountCta": "Crear una cuenta"
+  },
+  "auth": {
+    "signIn": "Iniciar Sesión",
+    "signUp": "Registrarse",
+    "signOut": "Cerrar Sesión",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "fullName": "Nombre completo",
+    "signInWithGoogle": "Continuar con Google",
+    "orContinueWith": "o continúa con email",
+    "noAccount": "¿No tienes una cuenta?",
+    "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "checkEmailTitle": "Revisa tu correo",
+    "checkEmailText": "Te hemos enviado un enlace de confirmación a tu correo electrónico. Haz clic en el enlace para verificar tu cuenta.",
+    "signInError": "Correo o contraseña inválidos",
+    "signUpError": "No se pudo crear la cuenta. Por favor, inténtalo de nuevo."
+  },
+  "account": {
+    "myAccount": "Mi Cuenta",
+    "profile": "Perfil",
+    "bookings": "Reservas",
+    "favorites": "Favoritos",
+    "fullName": "Nombre completo",
+    "email": "Correo electrónico",
+    "saveChanges": "Guardar Cambios",
+    "changesSaved": "¡Cambios guardados!",
+    "memberSince": "Miembro desde {date}",
+    "noBookings": "Aún no tienes reservas.",
+    "noFavorites": "Aún no has guardado ningún hotel.",
+    "startSearching": "Comenzar a buscar hoteles",
+    "viewHotel": "Ver hotel",
+    "viewBooking": "Ver reserva",
+    "removeFromFavorites": "Quitar de favoritos"
   },
   "footer": {
-    "about": "Sobre ZZStay",
-    "aboutText": "ZZStay ayuda a los viajeros a encontrar las mejores ofertas de hoteles en todo el mundo.",
+    "about": "Sobre BookYourHotel",
+    "aboutText": "BookYourHotel ayuda a los viajeros a encontrar las mejores ofertas de hoteles en todo el mundo.",
     "quickLinks": "Enlaces Rápidos",
     "support": "Soporte",
     "legal": "Legal",
@@ -197,6 +234,6 @@
     "termsOfService": "Términos de Servicio",
     "helpCenter": "Centro de Ayuda",
     "faq": "Preguntas Frecuentes",
-    "copyright": "© {year} ZZStay. Todos los derechos reservados."
+    "copyright": "© {year} BookYourHotel. Todos los derechos reservados."
   }
 }

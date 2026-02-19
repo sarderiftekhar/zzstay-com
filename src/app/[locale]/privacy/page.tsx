@@ -51,7 +51,7 @@ export default function PrivacyPage() {
         <p>
           You have the right to access, correct, or delete your personal information.
           You may also opt out of marketing communications at any time. Contact us at
-          privacy@zzstay.com for any requests.
+          privacy@bookyourhotel.online for any requests.
         </p>
 
         <h2>7. Changes to This Policy</h2>

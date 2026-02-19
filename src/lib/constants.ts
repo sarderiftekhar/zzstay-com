@@ -1,5 +1,5 @@
-export const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || "ZZStay";
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://zzstay.com";
+export const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || "BookYourHotel";
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://bookyourhotel.online";
 
 export const LANGUAGES = [
   { code: "en", name: "English", dir: "ltr" },
