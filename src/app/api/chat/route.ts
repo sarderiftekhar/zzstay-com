@@ -222,13 +222,40 @@ async function callGLM(
     body: JSON.stringify(body),
   });
 
+  const text = await res.text();
+
   if (!res.ok) {
-    const text = await res.text();
     console.error("[chat] GLM error:", res.status, text);
     throw new Error(`GLM API error: ${res.status}`);
   }
 
-  return res.json();
+  try {
+    return JSON.parse(text);
+  } catch (parseErr) {
+    // GLM (especially glm-4.5-flash) sometimes includes invalid escape sequences
+    // in reasoning_content or tool_call arguments. Fix invalid \x escapes.
+    console.warn("[chat] GLM JSON parse failed, attempting fix. Error:", (parseErr as Error).message);
+    console.warn("[chat] Raw near pos 150-180:", JSON.stringify(text.slice(145, 185)));
+    try {
+      // Replace invalid escape sequences: \x followed by non-JSON-escape chars
+      // Valid JSON escapes: \" \\ \/ \b \f \n \r \t \uXXXX
+      const fixed = text.replace(/\\(?!["\\/bfnrtu])/g, "\\\\");
+      return JSON.parse(fixed);
+    } catch {
+      console.error("[chat] GLM returned unfixable JSON:", text.slice(0, 500));
+      throw new Error("GLM returned malformed JSON");
+    }
+  }
+}
+
+const JSON_HEADERS = { "Content-Type": "application/json" };
+
+function jsonOk(data: Record<string, unknown>) {
+  return new Response(JSON.stringify(data), { headers: JSON_HEADERS });
+}
+
+function jsonError(msg: string, status = 500) {
+  return new Response(JSON.stringify({ error: msg }), { status, headers: JSON_HEADERS });
 }
 
 /* ─── POST handler ─── */
@@ -270,14 +297,18 @@ export async function POST(request: NextRequest) {
     ];
 
     // Call 1: May return tool_calls or a direct text response
-    const firstResponse = await callGLM(messages);
-    const firstChoice = firstResponse.choices?.[0];
+    // Step-by-step with isolated try-catch to pinpoint failures
+    let firstResponse;
+    try {
+      firstResponse = await callGLM(messages);
 
+    } catch (e) {
+      return jsonError("call1 failed: " + (e instanceof Error ? e.message : e));
+    }
+
+    const firstChoice = firstResponse.choices?.[0];
     if (!firstChoice) {
-      return new Response(
-        JSON.stringify({ error: "No response from AI" }),
-        { status: 500, headers: { "Content-Type": "application/json" } }
-      );
+      return jsonError("No response from AI");
     }
 
     const assistantMsg = firstChoice.message;
@@ -285,61 +316,84 @@ export async function POST(request: NextRequest) {
     // No tool calls → return text directly
     if (!assistantMsg.tool_calls || assistantMsg.tool_calls.length === 0) {
       const parsed = parseOptions(assistantMsg.content || "");
-      return new Response(
-        JSON.stringify({
-          content: parsed.content,
-          hotels: null,
-          options: parsed.options,
-        }),
-        { headers: { "Content-Type": "application/json" } }
-      );
+      return jsonOk({ content: parsed.content, hotels: null, options: parsed.options });
     }
 
-    // Execute the tool call (only search_hotels is available now)
+    // Execute the tool call
+
     const tc = assistantMsg.tool_calls[0] as ToolCall;
     let args: Record<string, unknown> = {};
     try {
-      args = JSON.parse(tc.function.arguments);
+      args = JSON.parse(tc.function.arguments || "{}");
     } catch {
-      args = {};
+      // Regex fallback for malformed JSON from GLM
+      const raw = tc.function.arguments || "";
+      const dest = raw.match(/"destination"\s*:\s*"([^"]+)"/)?.[1];
+      const checkIn = raw.match(/"checkIn"\s*:\s*"([^"]+)"/)?.[1];
+      const checkOut = raw.match(/"checkOut"\s*:\s*"([^"]+)"/)?.[1];
+      const adults = raw.match(/"adults"\s*:\s*(\d+)/)?.[1];
+      const children = raw.match(/"children"\s*:\s*(\d+)/)?.[1];
+      if (dest) args.destination = dest;
+      if (checkIn) args.checkIn = checkIn;
+      if (checkOut) args.checkOut = checkOut;
+      if (adults) args.adults = parseInt(adults);
+      if (children) args.children = parseInt(children);
+      console.warn("[chat] Parsed args via regex fallback:", args);
     }
 
-    const { result: toolResult, hotels } = tc.function.name === "search_hotels"
-      ? await executeSearch(args)
-      : { result: "Unknown tool", hotels: [] as HotelResult[] };
 
-    // Call 2: Send tool result back, get final response (no tools needed)
-    const finalMessages = [
-      ...messages,
-      {
-        role: "assistant",
-        content: assistantMsg.content || "",
-        tool_calls: assistantMsg.tool_calls,
-      },
-      {
-        role: "tool",
-        content: toolResult,
-        tool_call_id: tc.id,
-      },
-    ];
+    let toolResult: string;
+    let hotels: HotelResult[] = [];
+    try {
+      const searchResult = tc.function.name === "search_hotels"
+        ? await executeSearch(args)
+        : { result: "Unknown tool", hotels: [] as HotelResult[] };
+      toolResult = searchResult.result;
+      hotels = searchResult.hotels;
+    } catch (e) {
+      return jsonError("tool-exec failed: " + (e instanceof Error ? e.message : e));
+    }
 
-    const secondResponse = await callGLM(finalMessages, { tools: false });
+    // Call 2: Send tool result back, get final response
+
+    let secondResponse;
+    try {
+      const finalMessages = [
+        ...messages,
+        {
+          role: "assistant",
+          content: assistantMsg.content || "",
+          tool_calls: assistantMsg.tool_calls,
+        },
+        {
+          role: "tool",
+          content: toolResult,
+          tool_call_id: tc.id,
+        },
+      ];
+      secondResponse = await callGLM(finalMessages, { tools: false });
+
+    } catch (e) {
+      // Call 2 failed — still return hotels if we have them
+      console.error("[chat] Call 2 failed:", (e as Error).message);
+      return jsonOk({
+        content: "Here are the hotels I found!",
+        hotels: hotels.length > 0 ? hotels : null,
+        options: null,
+      });
+    }
+
     const secondChoice = secondResponse.choices?.[0];
     const parsed = parseOptions(secondChoice?.message?.content || "Here are the hotels I found!");
 
-    return new Response(
-      JSON.stringify({
-        content: parsed.content,
-        hotels: hotels.length > 0 ? hotels : null,
-        options: parsed.options,
-      }),
-      { headers: { "Content-Type": "application/json" } }
-    );
+    return jsonOk({
+      content: parsed.content,
+      hotels: hotels.length > 0 ? hotels : null,
+      options: parsed.options,
+    });
   } catch (error) {
-    console.error("[chat] Error:", error);
-    return new Response(
-      JSON.stringify({ error: "Failed to process chat message" }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
-    );
+    const errMsg = error instanceof Error ? error.message : String(error);
+    console.error("[chat] Unhandled error:", error instanceof Error ? error.stack : errMsg);
+    return jsonError(errMsg);
   }
 }

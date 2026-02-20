@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { useRouter, Link } from "@/i18n/routing";
 import { createClient } from "@/lib/supabase/client";
 import { Mail, Lock, User, Eye, EyeOff, Loader2, AlertCircle } from "lucide-react";
+import Image from "next/image";
 
 export default function LoginPage() {
   const t = useTranslations("auth");
@@ -96,13 +97,13 @@ export default function LoginPage() {
         {/* Logo */}
         <div className="text-center mb-8">
           <Link href="/" className="inline-block">
-            <span
-              className="text-4xl"
-              style={{ fontFamily: "var(--font-ephesis)", WebkitTextStroke: "0.6px" }}
-            >
-              <span className="text-accent-bright">Book</span>
-              <span className="text-accent">YourHotel</span>
-            </span>
+            <Image
+              src="/images/Logo-Book-Your-hotel.png"
+              alt="BookYourHotel"
+              width={200}
+              height={55}
+              className="h-14 w-auto brightness-0 opacity-80"
+            />
           </Link>
           <p className="text-sm text-text-muted mt-2">{t("signInToContinue")}</p>
         </div>

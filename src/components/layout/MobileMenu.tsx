@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/routing";
 import { X, User, BookOpen, Heart, LogOut, LogIn } from "lucide-react";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
 import { useAuthStore } from "@/store/authStore";
 import { useFavoritesStore } from "@/store/favoritesStore";
@@ -35,10 +36,13 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
       {/* Menu panel */}
       <div className="fixed top-0 right-0 h-full w-72 bg-white shadow-xl">
         <div className="flex items-center justify-between p-4 border-b border-border">
-          <span className="text-2xl" style={{ fontFamily: "var(--font-ephesis)", WebkitTextStroke: "0.5px" }}>
-            <span className="text-accent-bright">Book</span>
-            <span className="text-accent">YourHotel</span>
-          </span>
+          <Image
+            src="/images/Logo-Book-Your-hotel.png"
+            alt="BookYourHotel"
+            width={140}
+            height={40}
+            className="h-10 w-auto brightness-0 opacity-80"
+          />
           <button
             onClick={onClose}
             className="p-2 text-text-secondary hover:text-accent transition-colors cursor-pointer"

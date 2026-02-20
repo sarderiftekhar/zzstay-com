@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { MapPin, Phone, Mail, ArrowRight } from "lucide-react";
+import Image from "next/image";
 
 export default function Footer() {
   const t = useTranslations("footer");
@@ -19,8 +20,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8">
           {/* About — wider */}
           <div className="lg:col-span-4">
-            <div className="text-4xl sm:text-5xl mb-5" style={{ fontFamily: "var(--font-ephesis)", WebkitTextStroke: "0.7px" }}>
-              <span className="text-accent-bright">Book</span>YourHotel
+            <div className="mb-5">
+              <Image
+                src="/images/Logo-Book-Your-hotel.png"
+                alt="BookYourHotel"
+                width={220}
+                height={60}
+                className="h-20 w-auto"
+              />
             </div>
             <p className="text-sm text-gray-400 leading-relaxed mb-6 max-w-xs">
               {t("aboutText")}

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { MessageCircle, X, Send, Loader2 } from "lucide-react";
+import Image from "next/image";
 import { useChatStore } from "@/store/chatStore";
 import ChatMessage from "./ChatMessage";
 
@@ -184,12 +185,13 @@ export default function ChatBot() {
           {/* Header */}
           <div className="bg-gradient-to-r from-accent to-accent-hover p-4 flex items-center justify-between flex-shrink-0">
             <div className="flex items-center gap-3">
-              <div
-                className="text-2xl text-accent-bright leading-none"
-                style={{ fontFamily: "var(--font-ephesis)" }}
-              >
-                Byh
-              </div>
+              <Image
+                src="/images/Logo-Book-Your-hotel.png"
+                alt="BookYourHotel"
+                width={100}
+                height={28}
+                className="h-7 w-auto"
+              />
               <div>
                 <h3 className="text-white font-semibold text-sm leading-tight">
                   AI Travel Assistant

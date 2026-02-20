@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { Menu, Globe, Wallet } from "lucide-react";
+import Image from "next/image";
 import { usePreferencesStore } from "@/store/preferencesStore";
 import LanguageSelector from "./LanguageSelector";
 import CurrencySelector from "./CurrencySelector";
@@ -34,16 +35,17 @@ export default function Header() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-18">
+        <div className="flex items-center justify-between h-18 sm:h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <span
-              className="text-3xl sm:text-[36px] tracking-tight transition-transform duration-200 group-hover:scale-105"
-              style={{ fontFamily: "var(--font-ephesis)", WebkitTextStroke: "0.6px" }}
-            >
-              <span className="text-accent-bright">Book</span>
-              <span className="text-white">YourHotel</span>
-            </span>
+          <Link href="/" className="flex items-center transition-transform duration-200 hover:scale-105">
+            <Image
+              src="/images/Logo-Book-Your-hotel.png"
+              alt="BookYourHotel"
+              width={180}
+              height={50}
+              className="h-14 sm:h-16 w-auto"
+              priority
+            />
           </Link>
 
           {/* Desktop Navigation */}
