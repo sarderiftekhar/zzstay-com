@@ -5,14 +5,22 @@ import { useTranslations } from "next-intl";
 import SearchWidget from "@/components/search/SearchWidget";
 
 const SLIDES = [
-  { city: "Dubai",     letter: "D", src: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1920&q=80" },
-  { city: "Paris",     letter: "P", src: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1920&q=80" },
-  { city: "New York",  letter: "N", src: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=1920&q=80" },
-  { city: "Tokyo",     letter: "T", src: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=1920&q=80" },
-  { city: "London",    letter: "L", src: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1920&q=80" },
-  { city: "Istanbul",  letter: "I", src: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=1920&q=80" },
-  { city: "Singapore", letter: "S", src: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1920&q=80" },
-  { city: "Rome",      letter: "R", src: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=1920&q=80" },
+  { city: "Dubai",      letter: "D", src: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1920&q=80" },
+  { city: "Paris",      letter: "P", src: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1920&q=80" },
+  { city: "New York",   letter: "N", src: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=1920&q=80" },
+  { city: "Tokyo",      letter: "T", src: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=1920&q=80" },
+  { city: "London",     letter: "L", src: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1920&q=80" },
+  { city: "Istanbul",   letter: "I", src: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=1920&q=80" },
+  { city: "Singapore",  letter: "S", src: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1920&q=80" },
+  { city: "Rome",       letter: "R", src: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=1920&q=80" },
+  { city: "Barcelona",  letter: "B", src: "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=1920&q=80" },
+  { city: "Bangkok",    letter: "B", src: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=1920&q=80" },
+  { city: "Sydney",     letter: "S", src: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=1920&q=80" },
+  { city: "Maldives",   letter: "M", src: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=1920&q=80" },
+  { city: "Santorini",  letter: "S", src: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=1920&q=80" },
+  { city: "Bali",       letter: "B", src: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=1920&q=80" },
+  { city: "Rio",        letter: "R", src: "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=1920&q=80" },
+  { city: "Cape Town",  letter: "C", src: "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=1920&q=80" },
 ];
 
 const NUM = SLIDES.length;
@@ -254,7 +262,7 @@ export default function Hero() {
                 <span className="absolute inset-0 bg-accent-bright rounded-full animate-ping opacity-50" />
                 <span className="relative w-2.5 h-2.5 bg-accent-bright rounded-full" />
               </span>
-              <span className="text-white text-sm sm:text-base font-bold tracking-wide">3M+ Hotels</span>
+              <span className="text-white text-sm sm:text-base font-bold tracking-wide">2.6M+ Hotels</span>
             </div>
           </div>
 

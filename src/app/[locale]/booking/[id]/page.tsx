@@ -50,13 +50,13 @@ export default function BookingConfirmationPage() {
         <BookingSummary
           bookingId={bookingId}
           hotelName={(booking?.hotelName as string) || "Hotel"}
-          roomName={(booking?.roomName as string) || "Room"}
-          checkIn={(booking?.checkIn as string) || ""}
-          checkOut={(booking?.checkOut as string) || ""}
-          guestName={`${(booking?.guestFirstName as string) || ""} ${(booking?.guestLastName as string) || ""}`.trim() || "Guest"}
-          email={(booking?.guestEmail as string) || ""}
+          roomName={((booking?.bookedRooms as Array<Record<string, unknown>>)?.[0]?.roomType as Record<string, unknown>)?.name as string || "Room"}
+          checkIn={(booking?.checkin as string) || ""}
+          checkOut={(booking?.checkout as string) || ""}
+          guestName={`${(booking?.firstName as string) || ""} ${(booking?.lastName as string) || ""}`.trim() || "Guest"}
+          email={(booking?.email as string) || ""}
           currency={(booking?.currency as string) || "USD"}
-          totalRate={(booking?.totalRate as number) || 0}
+          totalRate={(booking?.price as number) || 0}
           hotelConfirmationCode={booking?.hotelConfirmationCode as string | undefined}
         />
 

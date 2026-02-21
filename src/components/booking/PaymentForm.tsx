@@ -3,12 +3,12 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { CreditCard, Loader2 } from "lucide-react";
+import { CreditCard, Lock, Loader2 } from "lucide-react";
 import Button from "@/components/ui/Button";
 
 interface PaymentFormProps {
   clientSecret: string;
-  onPaymentSuccess: () => void;
+  onPaymentSuccess: (postalCode: string) => void;
   loading: boolean;
   setLoading: (loading: boolean) => void;
 }
@@ -23,6 +23,7 @@ export default function PaymentForm({
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState<string | null>(null);
+  const [postalCode, setPostalCode] = useState("");
 
   async function handleSubmit() {
     if (!stripe || !elements) return;
@@ -37,9 +38,22 @@ export default function PaymentForm({
       return;
     }
 
+    if (!postalCode.trim()) {
+      setError("Please enter your billing postcode / ZIP code");
+      setLoading(false);
+      return;
+    }
+
     const { error: stripeError, paymentIntent } =
       await stripe.confirmCardPayment(clientSecret, {
-        payment_method: { card: cardElement },
+        payment_method: {
+          card: cardElement,
+          billing_details: {
+            address: {
+              postal_code: postalCode.trim(),
+            },
+          },
+        },
       });
 
     if (stripeError) {
@@ -48,8 +62,8 @@ export default function PaymentForm({
       return;
     }
 
-    if (paymentIntent?.status === "succeeded") {
-      onPaymentSuccess();
+    if (paymentIntent?.status === "succeeded" || paymentIntent?.status === "requires_capture") {
+      onPaymentSuccess(postalCode.trim());
     } else {
       setError(`Payment status: ${paymentIntent?.status}. Please try again.`);
       setLoading(false);
@@ -66,29 +80,57 @@ export default function PaymentForm({
         {t("paymentDetails")}
       </h2>
 
-      <div className="border border-border rounded-lg p-4">
-        <CardElement
-          options={{
-            style: {
-              base: {
-                fontSize: "16px",
-                color: "#111111",
-                "::placeholder": {
-                  color: "#888888",
+      {/* Card details */}
+      <div>
+        <label className="block text-sm font-medium text-text-primary mb-2">
+          Card Details
+        </label>
+        <div className="border border-border rounded-lg p-4 focus-within:ring-2 focus-within:ring-accent/30 focus-within:border-accent transition-colors">
+          <CardElement
+            options={{
+              hidePostalCode: true,
+              style: {
+                base: {
+                  fontSize: "16px",
+                  color: "#111111",
+                  fontFamily: "system-ui, sans-serif",
+                  "::placeholder": {
+                    color: "#888888",
+                  },
+                },
+                invalid: {
+                  color: "#dc2626",
                 },
               },
-              invalid: {
-                color: "#dc2626",
-              },
-            },
-          }}
+            }}
+          />
+        </div>
+      </div>
+
+      {/* Billing postcode / ZIP */}
+      <div className="mt-4">
+        <label
+          htmlFor="postalCode"
+          className="block text-sm font-medium text-text-primary mb-2"
+        >
+          Billing Postcode / ZIP Code
+        </label>
+        <input
+          id="postalCode"
+          type="text"
+          value={postalCode}
+          onChange={(e) => setPostalCode(e.target.value.toUpperCase())}
+          placeholder="e.g. SW1A 1AA or 10001"
+          maxLength={12}
+          autoComplete="postal-code"
+          className="w-full px-4 py-3 text-sm border border-border rounded-lg bg-white text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-colors"
         />
       </div>
 
-      <p className="mt-3 text-xs text-text-muted flex items-center gap-1">
-        <CreditCard size={12} />
-        Your payment information is encrypted and secure
-      </p>
+      <div className="mt-4 flex items-center gap-2 text-xs text-text-muted">
+        <Lock size={12} className="text-accent" />
+        Your payment information is encrypted and secure. Processed by Stripe.
+      </div>
 
       {error && (
         <div className="mt-4 p-3 bg-red-50 border border-error/20 rounded-lg text-sm text-error">

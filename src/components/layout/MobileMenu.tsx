@@ -42,6 +42,7 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
             width={140}
             height={40}
             className="h-10 w-auto brightness-0 opacity-80"
+            style={{ width: "auto" }}
           />
           <button
             onClick={onClose}

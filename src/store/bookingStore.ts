@@ -6,6 +6,11 @@ interface BookingState {
   offerId: string | null;
   hotelId: string | null;
   hotelName: string;
+  hotelAddress: string;
+  hotelCity: string;
+  hotelCountry: string;
+  hotelStarRating: number;
+  hotelFacilities: string[];
   roomName: string;
   boardName: string;
   checkIn: string;
@@ -18,11 +23,18 @@ interface BookingState {
   cancellationPolicy: string;
   maxOccupancy: number;
   roomImage: string;
+  adults: number;
+  children: number;
 
   setSelectedRoom: (room: {
     offerId: string;
     hotelId: string;
     hotelName: string;
+    hotelAddress: string;
+    hotelCity: string;
+    hotelCountry: string;
+    hotelStarRating: number;
+    hotelFacilities: string[];
     roomName: string;
     boardName: string;
     checkIn: string;
@@ -32,6 +44,8 @@ interface BookingState {
     cancellationPolicy: string;
     maxOccupancy: number;
     roomImage: string;
+    adults: number;
+    children: number;
   }) => void;
   setPrebook: (prebookId: string, clientSecret?: string, transactionId?: string) => void;
   reset: () => void;
@@ -41,6 +55,11 @@ export const useBookingStore = create<BookingState>()((set) => ({
   offerId: null,
   hotelId: null,
   hotelName: "",
+  hotelAddress: "",
+  hotelCity: "",
+  hotelCountry: "",
+  hotelStarRating: 0,
+  hotelFacilities: [],
   roomName: "",
   boardName: "",
   checkIn: "",
@@ -53,6 +72,8 @@ export const useBookingStore = create<BookingState>()((set) => ({
   cancellationPolicy: "",
   maxOccupancy: 2,
   roomImage: "",
+  adults: 2,
+  children: 0,
 
   setSelectedRoom: (room) =>
     set({
@@ -68,6 +89,11 @@ export const useBookingStore = create<BookingState>()((set) => ({
       offerId: null,
       hotelId: null,
       hotelName: "",
+      hotelAddress: "",
+      hotelCity: "",
+      hotelCountry: "",
+      hotelStarRating: 0,
+      hotelFacilities: [],
       roomName: "",
       boardName: "",
       checkIn: "",
@@ -80,5 +106,7 @@ export const useBookingStore = create<BookingState>()((set) => ({
       cancellationPolicy: "",
       maxOccupancy: 2,
       roomImage: "",
+      adults: 2,
+      children: 0,
     }),
 }));

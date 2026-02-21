@@ -249,12 +249,9 @@ export default function HotelCard({ hotel }: HotelCardProps) {
                   <p className="text-xs text-text-muted">{t("perNight")}</p>
                 </div>
               )}
-              <button
-                onClick={(e) => e.preventDefault()}
-                className="bg-accent hover:bg-accent-hover active:scale-95 text-white text-sm font-bold px-6 py-3.5 rounded-full transition-all duration-200 cursor-pointer whitespace-nowrap"
-              >
+              <span className="bg-accent group-hover:bg-accent-hover active:scale-95 text-white text-sm font-bold px-6 py-3.5 rounded-full transition-all duration-200 cursor-pointer whitespace-nowrap inline-block">
                 {ts("showPrices")}
-              </button>
+              </span>
             </div>
           </div>
         </div>

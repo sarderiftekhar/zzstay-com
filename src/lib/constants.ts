@@ -38,6 +38,7 @@ export const CURRENCIES = [
 export const DEFAULT_CURRENCY = "USD";
 
 export const LITEAPI_BASE_URL = "https://api.liteapi.travel/v3.0";
+export const LITEAPI_BOOK_URL = "https://book.liteapi.travel/v3.0";
 
 /** Map country code (from navigator.language region or IP geo) → currency code */
 export const COUNTRY_TO_CURRENCY: Record<string, string> = {

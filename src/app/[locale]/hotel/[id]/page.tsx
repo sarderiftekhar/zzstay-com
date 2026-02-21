@@ -263,6 +263,11 @@ function HotelDetailPageInner() {
       offerId,
       hotelId: hotel.id,
       hotelName: hotel.name,
+      hotelAddress: hotel.address,
+      hotelCity: hotel.city,
+      hotelCountry: hotel.country,
+      hotelStarRating: hotel.starRating,
+      hotelFacilities: hotel.facilities,
       roomName: room.roomName,
       boardName: room.boardName,
       checkIn: activeCheckIn,
@@ -272,6 +277,8 @@ function HotelDetailPageInner() {
       cancellationPolicy: room.cancellationPolicy?.refundableTag || "NON_REFUNDABLE",
       maxOccupancy: room.maxOccupancy || 2,
       roomImage: room.images?.[0] || hotel.images?.[0] || "",
+      adults: activeAdults,
+      children: activeChildren,
     });
 
     router.push("/checkout");

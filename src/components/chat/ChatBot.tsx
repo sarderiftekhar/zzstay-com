@@ -191,6 +191,7 @@ export default function ChatBot() {
                 width={100}
                 height={28}
                 className="h-7 w-auto"
+                style={{ width: "auto" }}
               />
               <div>
                 <h3 className="text-white font-semibold text-sm leading-tight">

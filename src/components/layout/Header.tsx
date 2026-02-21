@@ -78,6 +78,7 @@ export default function Header() {
           width={540}
           height={150}
           className="w-[200px] sm:w-[260px] lg:w-[300px] h-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.15)]"
+          style={{ height: "auto" }}
           priority
         />
       </Link>

@@ -1,17 +1,29 @@
-import { LITEAPI_BASE_URL } from "./constants";
+import { LITEAPI_BASE_URL, LITEAPI_BOOK_URL } from "./constants";
 
 const API_KEY = process.env.LITEAPI_API_KEY || "";
+
+export const isSandbox = API_KEY.startsWith("sand_");
 
 interface RequestOptions {
   method?: "GET" | "POST" | "PUT" | "DELETE";
   body?: Record<string, unknown>;
   params?: Record<string, string | number | boolean | undefined>;
+  baseUrl?: string;
+}
+
+// X-API-Key authentication for ALL endpoints (matching official LiteAPI SDK)
+function getHeaders(): Record<string, string> {
+  return {
+    "X-API-Key": API_KEY,
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  };
 }
 
 async function apiRequest<T>(endpoint: string, options: RequestOptions = {}): Promise<T> {
-  const { method = "GET", body, params } = options;
+  const { method = "GET", body, params, baseUrl = LITEAPI_BASE_URL } = options;
 
-  let url = `${LITEAPI_BASE_URL}${endpoint}`;
+  let url = `${baseUrl}${endpoint}`;
 
   if (params) {
     const searchParams = new URLSearchParams();
@@ -24,10 +36,7 @@ async function apiRequest<T>(endpoint: string, options: RequestOptions = {}): Pr
     if (queryString) url += `?${queryString}`;
   }
 
-  const headers: Record<string, string> = {
-    "X-API-Key": API_KEY,
-    "Content-Type": "application/json",
-  };
+  const headers = getHeaders();
 
   const response = await fetch(url, {
     method,
@@ -35,12 +44,26 @@ async function apiRequest<T>(endpoint: string, options: RequestOptions = {}): Pr
     body: body ? JSON.stringify(body) : undefined,
   });
 
-  if (!response.ok) {
-    const error = await response.text();
-    throw new Error(`LiteAPI Error (${response.status}): ${error}`);
+  const responseText = await response.text();
+  let data: T;
+
+  try {
+    data = JSON.parse(responseText);
+  } catch {
+    if (!response.ok) {
+      throw new Error(`LiteAPI Error (${response.status}): ${responseText}`);
+    }
+    throw new Error(`LiteAPI returned invalid JSON: ${responseText.slice(0, 200)}`);
   }
 
-  return response.json();
+  if (!response.ok) {
+    // Try to extract error message from JSON response
+    const errObj = data as Record<string, unknown>;
+    const errMsg = errObj.error || errObj.message || errObj.errors || responseText;
+    throw new Error(`LiteAPI Error (${response.status}): ${typeof errMsg === 'string' ? errMsg : JSON.stringify(errMsg)}`);
+  }
+
+  return data;
 }
 
 // Places autocomplete
@@ -114,30 +137,27 @@ export async function getHotelReviews(hotelId: string, limit: number = 10, offse
   });
 }
 
-// Prebook - lock rate
+// Prebook - lock rate (uses book.liteapi.travel)
+// In sandbox mode: no usePaymentSdk (no Stripe needed)
+// In production: usePaymentSdk: true to get Stripe secretKey + transactionId
 export async function prebookRate(offerId: string) {
+  const body: Record<string, unknown> = { offerId };
+  if (!isSandbox) {
+    body.usePaymentSdk = true;
+  }
   return apiRequest<{ data: Record<string, unknown> }>("/rates/prebook", {
     method: "POST",
-    body: { offerId, usePaymentSdk: true },
+    body,
+    baseUrl: LITEAPI_BOOK_URL,
   });
 }
 
-// Book - confirm reservation
-export async function confirmBooking(params: {
-  prebookId: string;
-  holder: { firstName: string; lastName: string; email: string };
-  payment: { method: string; transactionId: string };
-  guests: Array<{
-    occupancyNumber: number;
-    remarks: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-  }>;
-}) {
+// Book - confirm reservation (uses book.liteapi.travel)
+export async function confirmBooking(params: Record<string, unknown>) {
   return apiRequest<{ data: Record<string, unknown> }>("/rates/book", {
     method: "POST",
-    body: params as unknown as Record<string, unknown>,
+    body: params,
+    baseUrl: LITEAPI_BOOK_URL,
   });
 }
 

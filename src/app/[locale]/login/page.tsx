@@ -103,6 +103,7 @@ export default function LoginPage() {
               width={200}
               height={55}
               className="h-14 w-auto brightness-0 opacity-80"
+              style={{ width: "auto" }}
             />
           </Link>
           <p className="text-sm text-text-muted mt-2">{t("signInToContinue")}</p>

@@ -14,7 +14,9 @@ export function formatCurrency(
 }
 
 export function formatDate(date: string | Date, pattern: string = "MMM dd, yyyy"): string {
+  if (!date) return "N/A";
   const d = typeof date === "string" ? parseISO(date) : date;
+  if (isNaN(d.getTime())) return "N/A";
   return format(d, pattern);
 }
 

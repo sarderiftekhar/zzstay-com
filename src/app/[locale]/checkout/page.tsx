@@ -1,27 +1,90 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "@/i18n/routing";
-import { Elements } from "@stripe/react-stripe-js";
+import { useRouter, usePathname } from "@/i18n/routing";
 import { useBookingStore } from "@/store/bookingStore";
-import { getStripe } from "@/lib/stripe";
 import GuestForm from "@/components/booking/GuestForm";
-import PaymentForm from "@/components/booking/PaymentForm";
+import LiteAPIPaymentForm from "@/components/booking/LiteAPIPayment";
 import PriceBreakdown from "@/components/booking/PriceBreakdown";
 import Button from "@/components/ui/Button";
-import { ArrowLeft, Check } from "lucide-react";
+import { ArrowLeft, Check, Loader2 } from "lucide-react";
 import { GuestInfo } from "@/types/booking";
-import { createClient } from "@/lib/supabase/client";
-import { useAuthStore } from "@/store/authStore";
 
 type Step = "guest" | "payment";
+
+// Map LiteAPI error codes and HTTP statuses to user-friendly messages
+function getBookingErrorMessage(data: { code?: number; httpStatus?: number; error?: string }): string {
+  // LiteAPI application-level error codes (2xxx range)
+  if (data.code) {
+    switch (data.code) {
+      case 2001:
+        return "This room is no longer available. The rate may have expired. Please go back and select a different room.";
+      case 2002:
+        return "Missing booking information. Please check your details and try again.";
+      case 2003:
+        return "An unexpected error occurred while processing your booking. Please try again.";
+      case 2004:
+        return "This booking has already been processed. Please check your email for confirmation.";
+      case 2005:
+        return "This booking has already been completed. Please check your email for confirmation.";
+      case 2006:
+        return "The booking could not be completed. Please try again or select a different room.";
+      case 2007:
+        return "There was a problem processing your payment. Please check your payment details and try again.";
+      case 2008:
+        return "The payment method is not supported. Please use a different payment method.";
+      case 2009:
+        return "The booking request has expired. Please start the checkout process again.";
+      case 2010:
+        return "Insufficient funds on the card. Please use a different payment method.";
+      case 2011:
+        return "The card was declined. Please use a different card or payment method.";
+      case 2012:
+        return "Payment verification failed. Please check your card details and try again.";
+      case 2013:
+        return "Your booking was rejected by our verification system. Please use a valid, non-disposable email address (e.g. Gmail, Outlook) and try again.";
+      case 2014:
+        return "The prebook session has expired. Please go back and select the room again.";
+      case 4290:
+        return "Too many requests. Please wait a moment and try again.";
+    }
+  }
+
+  // HTTP status-level fallbacks
+  if (data.httpStatus) {
+    switch (data.httpStatus) {
+      case 400:
+        return "Invalid booking details. Please check your information and try again.";
+      case 401:
+        return "Authentication error. Please refresh the page and try again.";
+      case 403:
+        return "Your booking was rejected by our verification system. Please ensure you are using a valid email address and try again.";
+      case 404:
+        return "The selected room or rate was not found. It may no longer be available.";
+      case 429:
+        return "Too many requests. Please wait a moment and try again.";
+      case 500:
+      case 502:
+      case 503:
+        return "The booking service is temporarily unavailable. Please try again in a few minutes.";
+    }
+  }
+
+  // Fallback to raw error or generic message
+  return data.error || "Something went wrong. Please try again.";
+}
 
 export default function CheckoutPage() {
   const t = useTranslations("booking");
   const router = useRouter();
+  const pathname = usePathname();
   const booking = useBookingStore();
-  const { user } = useAuthStore();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const [step, setStep] = useState<Step>("guest");
   const [guestInfo, setGuestInfo] = useState<GuestInfo>({
@@ -36,9 +99,18 @@ export default function CheckoutPage() {
   const [error, setError] = useState<string | null>(null);
 
   // Prebook data
-  const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [secretKey, setSecretKey] = useState<string | null>(null);
   const [prebookId, setPrebookId] = useState<string | null>(null);
   const [transactionId, setTransactionId] = useState<string | null>(null);
+
+  // Wait for client hydration before reading store
+  if (!mounted) {
+    return (
+      <div className="pt-20 min-h-screen flex items-center justify-center">
+        <Loader2 size={32} className="animate-spin text-accent" />
+      </div>
+    );
+  }
 
   // Redirect if no room selected
   if (!booking.offerId) {
@@ -50,6 +122,14 @@ export default function CheckoutPage() {
     );
   }
 
+  const BLOCKED_EMAIL_DOMAINS = [
+    "mailinator.com", "guerrillamail.com", "tempmail.com", "throwaway.email",
+    "yopmail.com", "sharklasers.com", "guerrillamailblock.com", "grr.la",
+    "dispostable.com", "trashmail.com", "maildrop.cc", "fakeinbox.com",
+    "tempail.com", "temp-mail.org", "minutemail.com", "discard.email",
+    "mailnesia.com", "guerrillamail.info", "guerrillamail.net", "guerrillamail.de",
+  ];
+
   function validate(): boolean {
     const newErrors: Partial<Record<keyof GuestInfo, string>> = {};
     if (!guestInfo.firstName.trim()) newErrors.firstName = "Required";
@@ -57,7 +137,20 @@ export default function CheckoutPage() {
     if (!guestInfo.email.trim()) newErrors.email = "Required";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(guestInfo.email))
       newErrors.email = "Invalid email";
+    else {
+      const domain = guestInfo.email.split("@")[1]?.toLowerCase();
+      if (BLOCKED_EMAIL_DOMAINS.includes(domain)) {
+        newErrors.email = "Please use a real email address (disposable emails are not accepted)";
+      }
+    }
     if (!guestInfo.phone.trim()) newErrors.phone = "Required";
+    else {
+      const digits = guestInfo.phone.replace(/\D/g, "");
+      if (digits.length < 7) newErrors.phone = "Phone number is too short";
+      else if (digits.length > 15) newErrors.phone = "Phone number is too long";
+      else if (!/^[+\d][\d\s\-().]+$/.test(guestInfo.phone.trim()))
+        newErrors.phone = "Invalid phone number format";
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   }
@@ -68,7 +161,7 @@ export default function CheckoutPage() {
     setError(null);
 
     try {
-      // Prebook to get payment details
+      // Prebook to lock the rate
       const prebookRes = await fetch("/api/booking/prebook", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -78,10 +171,38 @@ export default function CheckoutPage() {
       const prebookData = await prebookRes.json();
 
       if (!prebookRes.ok || !prebookData.data) {
-        throw new Error(prebookData.error || "Failed to prepare booking");
+        throw new Error(getBookingErrorMessage(prebookData));
       }
 
       const id = prebookData.data.prebookId || prebookData.data.id;
+
+      // SANDBOX MODE: Book directly without payment form
+      if (prebookData.isSandbox) {
+        const bookRes = await fetch("/api/booking/book", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            prebookId: id,
+            firstName: guestInfo.firstName,
+            lastName: guestInfo.lastName,
+            email: guestInfo.email,
+            phone: guestInfo.phone,
+            specialRequests: guestInfo.specialRequests,
+          }),
+        });
+
+        const bookData = await bookRes.json();
+
+        if (!bookRes.ok || !bookData.data) {
+          throw new Error(getBookingErrorMessage(bookData));
+        }
+
+        const bookingId = bookData.data.bookingId || bookData.data.id;
+        router.push(`/booking/${bookingId}`);
+        return;
+      }
+
+      // PRODUCTION MODE: Show payment form (LiteAPI Payment SDK)
       const secret = prebookData.data.secretKey;
       const txnId = prebookData.data.transactionId;
 
@@ -89,8 +210,17 @@ export default function CheckoutPage() {
         throw new Error("Payment setup failed. Please try again.");
       }
 
+      // Store guest info in sessionStorage for after payment redirect
+      sessionStorage.setItem("byh_guest_info", JSON.stringify({
+        firstName: guestInfo.firstName,
+        lastName: guestInfo.lastName,
+        email: guestInfo.email,
+        phone: guestInfo.phone,
+        specialRequests: guestInfo.specialRequests,
+      }));
+
       setPrebookId(id);
-      setClientSecret(secret);
+      setSecretKey(secret);
       setTransactionId(txnId);
       setStep("payment");
     } catch (err) {
@@ -100,63 +230,11 @@ export default function CheckoutPage() {
     }
   }
 
-  async function handlePaymentSuccess() {
-    // Payment confirmed via Stripe, now finalize booking
-    setError(null);
-
-    try {
-      const bookRes = await fetch("/api/booking/book", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          prebookId,
-          transactionId,
-          firstName: guestInfo.firstName,
-          lastName: guestInfo.lastName,
-          email: guestInfo.email,
-          specialRequests: guestInfo.specialRequests,
-        }),
-      });
-
-      const bookData = await bookRes.json();
-
-      if (!bookRes.ok || !bookData.data) {
-        throw new Error(bookData.error || "Booking failed");
-      }
-
-      const bookingId = bookData.data.bookingId || bookData.data.id;
-
-      // Save to booking history if logged in
-      if (user) {
-        try {
-          const supabase = createClient();
-          await supabase.from("booking_history").insert({
-            user_id: user.id,
-            liteapi_booking_id: bookingId,
-            hotel_id: booking.hotelId,
-            hotel_name: booking.hotelName,
-            hotel_image: booking.roomImage,
-            room_name: booking.roomName,
-            check_in: booking.checkIn,
-            check_out: booking.checkOut,
-            currency: booking.currency,
-            total_rate: booking.totalRate,
-            status: "confirmed",
-            guest_name: `${guestInfo.firstName} ${guestInfo.lastName}`,
-            guest_email: guestInfo.email,
-          });
-        } catch {
-          // Don't block booking confirmation if history save fails
-        }
-      }
-
-      // Navigate to confirmation
-      router.push(`/booking/${bookingId}`);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
-      setLoading(false);
-    }
-  }
+  // Build the return URL for after payment
+  // pathname is like "/checkout", we need the full origin + locale path to /booking/confirm
+  const returnUrl = typeof window !== "undefined"
+    ? `${window.location.origin}${pathname.replace("/checkout", "/booking/confirm")}`
+    : "";
 
   return (
     <div className="pt-20 min-h-screen bg-bg-cream">
@@ -166,7 +244,7 @@ export default function CheckoutPage() {
           onClick={() => {
             if (step === "payment") {
               setStep("guest");
-              setClientSecret(null);
+              setSecretKey(null);
             } else {
               router.back();
             }
@@ -233,16 +311,13 @@ export default function CheckoutPage() {
               </>
             )}
 
-            {step === "payment" && clientSecret && (
-              <Elements
-                stripe={getStripe()}
-                options={{ clientSecret }}
-              >
-                <PaymentForm
-                  clientSecret={clientSecret}
-                  onPaymentSuccess={handlePaymentSuccess}
-                  loading={loading}
-                  setLoading={setLoading}
+            {step === "payment" && secretKey && prebookId && transactionId && (
+              <>
+                <LiteAPIPaymentForm
+                  secretKey={secretKey}
+                  transactionId={transactionId}
+                  prebookId={prebookId}
+                  returnUrl={returnUrl}
                 />
 
                 {error && (
@@ -250,7 +325,7 @@ export default function CheckoutPage() {
                     {error}
                   </div>
                 )}
-              </Elements>
+              </>
             )}
           </div>
 
@@ -258,6 +333,11 @@ export default function CheckoutPage() {
           <div>
             <PriceBreakdown
               hotelName={booking.hotelName}
+              hotelAddress={booking.hotelAddress}
+              hotelCity={booking.hotelCity}
+              hotelCountry={booking.hotelCountry}
+              hotelStarRating={booking.hotelStarRating}
+              hotelFacilities={booking.hotelFacilities}
               roomName={booking.roomName}
               boardName={booking.boardName}
               checkIn={booking.checkIn}
@@ -266,6 +346,8 @@ export default function CheckoutPage() {
               totalRate={booking.totalRate}
               cancellationPolicy={booking.cancellationPolicy}
               roomImage={booking.roomImage}
+              adults={booking.adults}
+              children={booking.children}
             />
           </div>
         </div>
