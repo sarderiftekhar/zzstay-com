@@ -45,6 +45,7 @@ export default function Footer() {
             <ul className="space-y-3">
               {[
                 { href: "/" as const, label: tn("home") },
+                { href: "/manage-booking" as const, label: tn("manageBooking") },
                 { href: "/about" as const, label: tn("about") },
                 { href: "/contact" as const, label: tn("contact") },
               ].map((item) => (

@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/routing";
-import { Globe, Wallet, Home, Info, Mail, LogIn } from "lucide-react";
+import { Globe, Wallet, Home, Info, Mail, LogIn, ClipboardList } from "lucide-react";
 import Image from "next/image";
 import { usePreferencesStore } from "@/store/preferencesStore";
 import LanguageSelector from "./LanguageSelector";
@@ -57,6 +57,7 @@ export default function Header() {
 
   const navItems = [
     { href: "/" as const, label: t("home"), icon: Home },
+    { href: "/manage-booking" as const, label: t("manageBooking"), icon: ClipboardList },
     { href: "/about" as const, label: t("about"), icon: Info },
     { href: "/contact" as const, label: t("contact"), icon: Mail },
   ];

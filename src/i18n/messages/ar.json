@@ -32,7 +32,8 @@
     "about": "من نحن",
     "contact": "اتصل بنا",
     "language": "اللغة",
-    "currency": "العملة"
+    "currency": "العملة",
+    "manageBooking": "إدارة الحجز"
   },
   "hero": {
     "title": "نفس الإقامة. أسعار أفضل.",
@@ -255,5 +256,36 @@
     "cookiePolicy": "سياسة ملفات تعريف الارتباط",
     "faq": "الأسئلة الشائعة",
     "copyright": "© {year} BookYourHotel. جميع الحقوق محفوظة. مشغل بواسطة <company>Unique Evolution Limited</company>."
+  },
+  "manageBooking": {
+    "title": "إدارة الحجز",
+    "subtitle": "أدخل بياناتك للوصول إلى الحجز. يمكنك العثور على هذه المعلومات في بريد التأكيد الإلكتروني.",
+    "lastName": "اسم العائلة",
+    "lastNamePlaceholder": "أدخل اسم العائلة",
+    "bookingIdLabel": "رقم الحجز أو رقم التأكيد",
+    "bookingIdPlaceholder": "أدخل رقم الحجز أو رقم التأكيد",
+    "findBooking": "البحث عن الحجز",
+    "searching": "جاري البحث...",
+    "fieldsRequired": "يرجى إدخال اسم العائلة ورقم الحجز.",
+    "notFound": "لم يتم العثور على حجز. يرجى التحقق من بياناتك والمحاولة مرة أخرى.",
+    "lookupError": "حدث خطأ ما. يرجى المحاولة مرة أخرى لاحقاً.",
+    "helpText": "يمكنك العثور على رقم الحجز ورقم التأكيد في البريد الإلكتروني الذي أرسلناه لك بعد الحجز.",
+    "bookingStatus": "حالة الحجز",
+    "searchAnother": "البحث عن حجز آخر",
+    "hotel": "الفندق",
+    "room": "الغرفة",
+    "board": "خطة الوجبات",
+    "guests": "الضيوف",
+    "guestCount": "{count, plural, one {ضيف} other {ضيوف}}",
+    "checkIn": "تسجيل الوصول",
+    "checkOut": "تسجيل المغادرة",
+    "guestName": "اسم الضيف",
+    "email": "البريد الإلكتروني",
+    "phone": "الهاتف",
+    "cancellationPolicy": "سياسة الإلغاء",
+    "freeCancellation": "إلغاء مجاني",
+    "nonRefundable": "غير قابل للاسترداد",
+    "cancelBefore": "إلغاء مجاني قبل {date}",
+    "needHelp": "هل تحتاج مساعدة بخصوص حجزك؟ تواصل معنا على sales@uniqevo.co.uk"
   }
 }

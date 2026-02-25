@@ -32,7 +32,8 @@
     "about": "Über Uns",
     "contact": "Kontakt",
     "language": "Sprache",
-    "currency": "Währung"
+    "currency": "Währung",
+    "manageBooking": "Buchung verwalten"
   },
   "hero": {
     "title": "Gleiche Aufenthalte. Bessere Preise.",
@@ -255,5 +256,36 @@
     "cookiePolicy": "Cookie-Richtlinie",
     "faq": "FAQ",
     "copyright": "© {year} BookYourHotel. Alle Rechte vorbehalten. Betrieben von <company>Unique Evolution Limited</company>."
+  },
+  "manageBooking": {
+    "title": "Buchung verwalten",
+    "subtitle": "Geben Sie Ihre Daten ein, um auf die Buchung zuzugreifen. Diese Informationen finden Sie in Ihrer Bestätigungs-E-Mail.",
+    "lastName": "Nachname",
+    "lastNamePlaceholder": "Geben Sie Ihren Nachnamen ein",
+    "bookingIdLabel": "Buchungs-ID oder Bestätigungsnummer",
+    "bookingIdPlaceholder": "Geben Sie Ihre Buchungs-ID oder Bestätigungsnummer ein",
+    "findBooking": "Buchung finden",
+    "searching": "Suche läuft...",
+    "fieldsRequired": "Bitte geben Sie sowohl Ihren Nachnamen als auch die Buchungs-ID ein.",
+    "notFound": "Keine Buchung gefunden. Bitte überprüfen Sie Ihre Angaben und versuchen Sie es erneut.",
+    "lookupError": "Etwas ist schiefgelaufen. Bitte versuchen Sie es später erneut.",
+    "helpText": "Ihre Buchungs-ID und Bestätigungsnummer finden Sie in der E-Mail, die wir Ihnen nach der Buchung gesendet haben.",
+    "bookingStatus": "Buchungsstatus",
+    "searchAnother": "Andere Buchung suchen",
+    "hotel": "Hotel",
+    "room": "Zimmer",
+    "board": "Verpflegung",
+    "guests": "Gäste",
+    "guestCount": "{count, plural, one {Gast} other {Gäste}}",
+    "checkIn": "Check-in",
+    "checkOut": "Check-out",
+    "guestName": "Name des Gastes",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "cancellationPolicy": "Stornierungsbedingungen",
+    "freeCancellation": "Kostenlose Stornierung",
+    "nonRefundable": "Nicht Erstattbar",
+    "cancelBefore": "Kostenlose Stornierung vor dem {date}",
+    "needHelp": "Brauchen Sie Hilfe mit Ihrer Buchung? Kontaktieren Sie uns unter sales@uniqevo.co.uk"
   }
 }

@@ -32,7 +32,8 @@
     "about": "Sobre Nosotros",
     "contact": "Contacto",
     "language": "Idioma",
-    "currency": "Moneda"
+    "currency": "Moneda",
+    "manageBooking": "Gestionar Reserva"
   },
   "hero": {
     "title": "Mismas Estancias. Mejores Precios.",
@@ -255,5 +256,36 @@
     "cookiePolicy": "Política de Cookies",
     "faq": "Preguntas Frecuentes",
     "copyright": "© {year} BookYourHotel. Todos los derechos reservados. Operado por <company>Unique Evolution Limited</company>."
+  },
+  "manageBooking": {
+    "title": "Gestionar Reserva",
+    "subtitle": "Introduce tus datos para acceder a la reserva. Esta información se encuentra en tu correo de confirmación.",
+    "lastName": "Apellido",
+    "lastNamePlaceholder": "Introduce tu apellido",
+    "bookingIdLabel": "ID de Reserva o Número de Confirmación",
+    "bookingIdPlaceholder": "Introduce tu ID de reserva o número de confirmación",
+    "findBooking": "Buscar Reserva",
+    "searching": "Buscando...",
+    "fieldsRequired": "Por favor, introduce tu apellido y el ID de reserva.",
+    "notFound": "No se encontró ninguna reserva. Por favor, verifica tus datos e intenta de nuevo.",
+    "lookupError": "Algo salió mal. Por favor, intenta de nuevo más tarde.",
+    "helpText": "Puedes encontrar tu ID de reserva y número de confirmación en el correo que te enviamos después de la reserva.",
+    "bookingStatus": "Estado de la Reserva",
+    "searchAnother": "Buscar otra reserva",
+    "hotel": "Hotel",
+    "room": "Habitación",
+    "board": "Plan de Comidas",
+    "guests": "Huéspedes",
+    "guestCount": "{count, plural, one {huésped} other {huéspedes}}",
+    "checkIn": "Entrada",
+    "checkOut": "Salida",
+    "guestName": "Nombre del Huésped",
+    "email": "Correo Electrónico",
+    "phone": "Teléfono",
+    "cancellationPolicy": "Política de Cancelación",
+    "freeCancellation": "Cancelación Gratuita",
+    "nonRefundable": "No Reembolsable",
+    "cancelBefore": "Cancelación gratuita antes del {date}",
+    "needHelp": "¿Necesitas ayuda con tu reserva? Contáctanos en sales@uniqevo.co.uk"
   }
 }

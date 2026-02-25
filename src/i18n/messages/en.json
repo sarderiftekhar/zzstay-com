@@ -32,7 +32,8 @@
     "about": "About Us",
     "contact": "Contact",
     "language": "Language",
-    "currency": "Currency"
+    "currency": "Currency",
+    "manageBooking": "Manage Booking"
   },
   "hero": {
     "title": "Same Stays. Better Prices.",
@@ -255,5 +256,36 @@
     "cookiePolicy": "Cookie Policy",
     "faq": "FAQ",
     "copyright": "© {year} BookYourHotel. All rights reserved. Operated by <company>Unique Evolution Limited</company>."
+  },
+  "manageBooking": {
+    "title": "Manage Booking",
+    "subtitle": "Enter your details to access the booking. This information can be found in your confirmation email.",
+    "lastName": "Last Name",
+    "lastNamePlaceholder": "Enter your last name",
+    "bookingIdLabel": "Booking ID or Confirmation No",
+    "bookingIdPlaceholder": "Enter your booking ID or confirmation number",
+    "findBooking": "Find Booking",
+    "searching": "Searching...",
+    "fieldsRequired": "Please enter both your last name and booking ID.",
+    "notFound": "No booking found. Please check your details and try again.",
+    "lookupError": "Something went wrong. Please try again later.",
+    "helpText": "You can find your booking ID and confirmation number in the email we sent you after booking.",
+    "bookingStatus": "Booking Status",
+    "searchAnother": "Search another booking",
+    "hotel": "Hotel",
+    "room": "Room",
+    "board": "Meal Plan",
+    "guests": "Guests",
+    "guestCount": "{count, plural, one {guest} other {guests}}",
+    "checkIn": "Check-in",
+    "checkOut": "Check-out",
+    "guestName": "Guest Name",
+    "email": "Email",
+    "phone": "Phone",
+    "cancellationPolicy": "Cancellation Policy",
+    "freeCancellation": "Free Cancellation",
+    "nonRefundable": "Non-Refundable",
+    "cancelBefore": "Free cancellation before {date}",
+    "needHelp": "Need help with your booking? Contact us at sales@uniqevo.co.uk"
   }
 }

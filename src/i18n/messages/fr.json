@@ -32,7 +32,8 @@
     "about": "À Propos",
     "contact": "Contact",
     "language": "Langue",
-    "currency": "Devise"
+    "currency": "Devise",
+    "manageBooking": "Gérer la Réservation"
   },
   "hero": {
     "title": "Mêmes Séjours. Meilleurs Prix.",
@@ -255,5 +256,36 @@
     "cookiePolicy": "Politique de Cookies",
     "faq": "FAQ",
     "copyright": "© {year} BookYourHotel. Tous droits réservés. Exploité par <company>Unique Evolution Limited</company>."
+  },
+  "manageBooking": {
+    "title": "Gérer la Réservation",
+    "subtitle": "Entrez vos informations pour accéder à la réservation. Ces informations se trouvent dans votre e-mail de confirmation.",
+    "lastName": "Nom de famille",
+    "lastNamePlaceholder": "Entrez votre nom de famille",
+    "bookingIdLabel": "ID de Réservation ou Numéro de Confirmation",
+    "bookingIdPlaceholder": "Entrez votre ID de réservation ou numéro de confirmation",
+    "findBooking": "Trouver la Réservation",
+    "searching": "Recherche en cours...",
+    "fieldsRequired": "Veuillez entrer votre nom de famille et votre ID de réservation.",
+    "notFound": "Aucune réservation trouvée. Veuillez vérifier vos informations et réessayer.",
+    "lookupError": "Une erreur est survenue. Veuillez réessayer plus tard.",
+    "helpText": "Vous trouverez votre ID de réservation et votre numéro de confirmation dans l'e-mail que nous vous avons envoyé après la réservation.",
+    "bookingStatus": "Statut de la Réservation",
+    "searchAnother": "Chercher une autre réservation",
+    "hotel": "Hôtel",
+    "room": "Chambre",
+    "board": "Formule Repas",
+    "guests": "Voyageurs",
+    "guestCount": "{count, plural, one {voyageur} other {voyageurs}}",
+    "checkIn": "Arrivée",
+    "checkOut": "Départ",
+    "guestName": "Nom du Client",
+    "email": "E-mail",
+    "phone": "Téléphone",
+    "cancellationPolicy": "Politique d'Annulation",
+    "freeCancellation": "Annulation Gratuite",
+    "nonRefundable": "Non Remboursable",
+    "cancelBefore": "Annulation gratuite avant le {date}",
+    "needHelp": "Besoin d'aide avec votre réservation ? Contactez-nous à sales@uniqevo.co.uk"
   }
 }
