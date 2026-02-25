@@ -191,7 +191,7 @@ export default function PriceBreakdown({
             <div>
               <Badge className="text-xs">{boardName}</Badge>
               {boardDesc && (
-                <p className="text-[11px] text-text-muted mt-1">{boardDesc}</p>
+                <p className="text-xs text-text-muted mt-1">{boardDesc}</p>
               )}
             </div>
           )}
@@ -272,15 +272,15 @@ export default function PriceBreakdown({
             <span className="text-xl font-bold text-accent">
               {formatCurrency(totalRate, currency)}
             </span>
-            <p className="text-[11px] text-text-muted">
+            <p className="text-xs text-text-muted">
               {formatCurrency(perNight, currency)} / night
             </p>
           </div>
         </div>
 
         {/* Currency notice */}
-        <div className="flex items-center gap-1.5 text-[11px] text-text-muted">
-          <Banknote size={12} className="shrink-0" />
+        <div className="flex items-center gap-1.5 text-xs text-text-muted">
+          <Banknote size={13} className="shrink-0" />
           <span>You will be charged in <strong>{currency}</strong></span>
         </div>
 
@@ -293,12 +293,12 @@ export default function PriceBreakdown({
             {isFreeCancellation ? "Free Cancellation" : "Non-Refundable"}
           </Badge>
           {isFreeCancellation && deadlineFormatted && (
-            <p className="text-[11px] text-success mt-1.5">
+            <p className="text-xs text-success mt-1.5">
               Free cancellation until {deadlineFormatted}
             </p>
           )}
           {!isFreeCancellation && (
-            <p className="text-[11px] text-warning mt-1.5">
+            <p className="text-xs text-warning mt-1.5">
               This booking is non-refundable. No refund will be issued if cancelled.
             </p>
           )}
