@@ -219,7 +219,10 @@
     "passwordTooShort": "Password must be at least 6 characters.",
     "signInError": "Invalid email or password",
     "signUpError": "Could not create account. Please try again.",
-    "google": "Continue with Google"
+    "google": "Continue with Google",
+    "emailConfirmedTitle": "Email Verified!",
+    "emailConfirmedText": "Your email has been verified successfully. You can now sign in to your account and start booking hotels.",
+    "linkExpired": "This verification link has expired. Please sign up again to receive a new link."
   },
   "account": {
     "myAccount": "My Account",

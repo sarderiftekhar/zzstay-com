@@ -219,7 +219,10 @@
     "passwordTooShort": "Le mot de passe doit comporter au moins 6 caractères.",
     "signInError": "Email ou mot de passe incorrect",
     "signUpError": "Impossible de créer le compte. Veuillez réessayer.",
-    "google": "Continuer avec Google"
+    "google": "Continuer avec Google",
+    "emailConfirmedTitle": "E-mail vérifié !",
+    "emailConfirmedText": "Votre adresse e-mail a été vérifiée avec succès. Vous pouvez maintenant vous connecter à votre compte et commencer à réserver des hôtels.",
+    "linkExpired": "Ce lien de vérification a expiré. Veuillez vous inscrire à nouveau pour recevoir un nouveau lien."
   },
   "account": {
     "myAccount": "Mon Compte",

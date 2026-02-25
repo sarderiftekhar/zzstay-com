@@ -20,8 +20,13 @@ export default function LoginPage() {
   const [fullName, setFullName] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const errorParam = searchParams.get("error");
   const [error, setError] = useState<string | null>(
-    searchParams.get("error") ? t("authError") : null
+    errorParam
+      ? errorParam === "auth_failed"
+        ? t("authError")
+        : decodeURIComponent(errorParam)
+      : null
   );
   const [success, setSuccess] = useState<string | null>(null);
 

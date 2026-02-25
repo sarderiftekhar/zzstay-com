@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { createServerClient } from "@supabase/ssr";
 import { routing } from "./i18n/routing";
@@ -6,6 +6,16 @@ import { routing } from "./i18n/routing";
 const intlMiddleware = createMiddleware(routing);
 
 export async function middleware(request: NextRequest) {
+  // Catch Supabase auth errors redirected to root (e.g. expired email links)
+  const authError = request.nextUrl.searchParams.get("error");
+  const authErrorCode = request.nextUrl.searchParams.get("error_code");
+  if (authError && authErrorCode) {
+    const errorDesc = request.nextUrl.searchParams.get("error_description") || "Authentication failed";
+    const loginUrl = new URL("/en/login", request.url);
+    loginUrl.searchParams.set("error", errorDesc);
+    return NextResponse.redirect(loginUrl);
+  }
+
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
