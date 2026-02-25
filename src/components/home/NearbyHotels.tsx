@@ -81,7 +81,7 @@ export default function NearbyHotels() {
   if (!loading && hotels.length === 0) return null;
 
   return (
-    <section className="py-16 sm:py-20">
+    <section className="pt-4 pb-16 sm:pt-6 sm:pb-20">
       <div
         ref={sectionRef}
         className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${isVisible ? "animate-fade-up" : "scroll-hidden"}`}
