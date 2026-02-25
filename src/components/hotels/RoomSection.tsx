@@ -78,8 +78,8 @@ export default function RoomSection({
     if (cancellationFilter) {
       filtered = filtered.filter(
         (r) =>
-          r.cancellationPolicy?.refundableTag !== "NON_REFUNDABLE" &&
-          r.cancellationPolicy?.refundableTag !== undefined
+          r.cancellationPolicy?.refundableTag === "FREE_CANCELLATION" ||
+          r.cancellationPolicy?.refundableTag === "REFUNDABLE"
       );
     }
 

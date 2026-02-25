@@ -116,7 +116,7 @@ export default function RoomTypeGroup({
     return (
       <>
         {visibleRates.map((rate, idx) => {
-          const isRefundable = rate.cancellationPolicy?.refundableTag !== "NON_REFUNDABLE" && rate.cancellationPolicy?.refundableTag !== undefined;
+          const isRefundable = rate.cancellationPolicy?.refundableTag === "FREE_CANCELLATION" || rate.cancellationPolicy?.refundableTag === "REFUNDABLE";
           const discount = rate.originalRate && rate.originalRate > rate.retailRate ? Math.round((1 - rate.retailRate / rate.originalRate) * 100) : 0;
           const isFirst = idx === 0;
 
@@ -254,7 +254,7 @@ export default function RoomTypeGroup({
         </div>
         <div className="space-y-0">
           {visibleRates.map((rate, idx) => {
-            const isRefundable = rate.cancellationPolicy?.refundableTag !== "NON_REFUNDABLE" && rate.cancellationPolicy?.refundableTag !== undefined;
+            const isRefundable = rate.cancellationPolicy?.refundableTag === "FREE_CANCELLATION" || rate.cancellationPolicy?.refundableTag === "REFUNDABLE";
             const discount = rate.originalRate && rate.originalRate > rate.retailRate ? Math.round((1 - rate.retailRate / rate.originalRate) * 100) : 0;
             return (
               <div key={rate.offerId || idx} className="flex items-center justify-between gap-3 py-3 border-t border-border/40 cursor-pointer hover:bg-accent/3 transition-all duration-200 -mx-4 px-4 rounded-lg">
