@@ -123,12 +123,12 @@ export default function RoomTypeGroup({
           return (
             <tr
               key={rate.offerId || idx}
-              className={`hover:bg-accent/3 transition-all duration-200 cursor-pointer ${idx < visibleRates.length - 1 ? "border-b border-border/30" : ""}`}
+              className={`hover:bg-accent/3 transition-all duration-200 cursor-pointer border-b border-border/20`}
               onClick={() => onSelectRoom(rate.offerId)}
             >
               {/* Room Type cell — spans all rows */}
               {isFirst && (
-                <td className="pl-8 pr-5 py-9 align-top" rowSpan={totalRows}>
+                <td className="pl-8 pr-5 py-9 align-top border-r border-border/20" rowSpan={totalRows}>
                   <h3 className="text-lg font-bold text-text-primary leading-snug mb-2" style={{ fontFamily: "var(--font-playfair)" }}>
                     {roomName}
                   </h3>
@@ -160,7 +160,7 @@ export default function RoomTypeGroup({
 
               {/* Max Guests cell — spans all rows */}
               {isFirst && (
-                <td className="px-4 py-9 text-center align-middle" rowSpan={totalRows}>
+                <td className="px-4 py-9 text-center align-middle border-r border-border/20" rowSpan={totalRows}>
                   {maxOccupancy && (
                     <span className="inline-flex items-center gap-1.5 text-sm text-text-secondary">
                       <Users size={15} className="text-accent shrink-0" />
@@ -171,7 +171,7 @@ export default function RoomTypeGroup({
               )}
 
               {/* Options: board type + cancellation */}
-              <td className="px-4 py-9 text-center align-middle">
+              <td className="px-4 py-9 text-center align-middle border-r border-border/20">
                 <p className="text-sm font-medium text-text-primary">{rate.boardName}</p>
                 {isRefundable ? (
                   <span className="inline-flex items-center gap-1 text-xs text-success font-medium mt-1">

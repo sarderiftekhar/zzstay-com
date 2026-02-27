@@ -281,9 +281,9 @@ export default function RoomSection({
             <table className="w-full border-collapse">
               <thead>
                 <tr className="bg-accent/5 text-xs text-accent font-semibold uppercase tracking-wider">
-                  <th className="text-left py-3.5 pl-20 pr-5 w-[38%]">Room type</th>
-                  <th className="text-center py-3.5 px-4 w-[14%]">Max Guests</th>
-                  <th className="text-center py-3.5 px-4 w-[22%]">Options</th>
+                  <th className="text-left py-3.5 pl-8 pr-5 w-[38%] border-r border-border/20">Room type</th>
+                  <th className="text-center py-3.5 px-4 w-[14%] border-r border-border/20">Max Guests</th>
+                  <th className="text-center py-3.5 px-4 w-[22%] border-r border-border/20">Options</th>
                   <th className="text-center py-3.5 px-4 w-[26%]">Price</th>
                 </tr>
               </thead>
